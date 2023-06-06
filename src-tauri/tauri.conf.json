@@ -24,7 +24,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "dic_reminder.com.tauri.dev",
+      "identifier": "dic-reminder.com.tauri.dev",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
