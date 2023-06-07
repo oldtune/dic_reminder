@@ -1,6 +1,8 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use std::path::PathBuf;
+
 use rand::Rng;
 use rusqlite::Connection;
 
@@ -11,8 +13,13 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-fn get_some_word() -> String {
-    let connection = Connection::open("./dictionary.db").unwrap();
+fn get_some_word(handle: tauri::AppHandle) -> String {
+    let db_path = handle
+        .path_resolver()
+        .resolve_resource("dictionary.db")
+        .expect("Failed to resolve dictionary db");
+
+    let connection = Connection::open(db_path).unwrap();
     let word_counter: usize = connection
         .prepare("SELECT COUNT(*) FROM WORDS")
         .unwrap()
